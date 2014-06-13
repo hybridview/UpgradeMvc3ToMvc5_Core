@@ -25,9 +25,9 @@ $configContent = [System.IO.File]::ReadAllText($config);
 
 #TODO: When updating packages, these replacements MIGHT already be performed. Look into this and remove if confirmed.
 $configContent = $configContent.Replace('System.Web.Mvc, Version=3.0.0.0','System.Web.Mvc, Version=5.1.0.0');
-$configContent = $configContent.Replace('System.Web.WebPages, Version=1.0.0.0','System.Web.WebPages, Version=3.1.2.0');
+$configContent = $configContent.Replace('System.Web.WebPages, Version=1.0.0.0','System.Web.WebPages, Version=3.0.0.0');
 $configContent = $configContent.Replace('System.Web.Helpers, Version=1.0.0.0','System.Web.Helpers, Version=3.0.0.0'); #TODO: Not sure if this should be here. Does OAth depend on this? Check Mvc3 config file and see if this is in there.
-$configContent = $configContent.Replace('System.Web.WebPages.Razor, Version=1.0.0.0','System.Web.WebPages.Razor, Version=3.1.2.0');
+$configContent = $configContent.Replace('System.Web.WebPages.Razor, Version=1.0.0.0','System.Web.WebPages.Razor, Version=3.0.0.0');
 [System.IO.File]::WriteAllText($config, $configContent);}
 
 
@@ -96,6 +96,32 @@ $rootConfig.DocumentElement.SelectNodes("/configuration/runtime/rootConfig:assem
     $assemblyIdentity = $rootConfig.CreateElement("assemblyIdentity", $assemblyBindingNameSpace)
     $attribute = $rootConfig.CreateAttribute("name")
     $attribute.Value = "System.Web.WebPages";
+    $assemblyIdentity.Attributes.Append($attribute);
+    
+    $attribute = $rootConfig.CreateAttribute("publicKeyToken")
+    $attribute.Value = "31bf3856ad364e35";
+    $assemblyIdentity.Attributes.Append($attribute);
+    $dependentAssembly.AppendChild($assemblyIdentity);
+    
+    $bindingRedirect = $rootConfig.CreateElement("bindingRedirect", $assemblyBindingNameSpace)
+    $attribute = $rootConfig.CreateAttribute("oldVersion")
+    $attribute.Value = "1.0.0.0";
+    $bindingRedirect.Attributes.Append($attribute);
+    
+    $attribute = $rootConfig.CreateAttribute("newVersion")
+    $attribute.Value = "3.0.0.0";
+    $bindingRedirect.Attributes.Append($attribute);
+    $dependentAssembly.AppendChild($bindingRedirect);
+    
+    $assemblyBinding.AppendChild($dependentAssembly);
+	
+	
+	
+# Adding System.Web.WebPages.Razor assembly binding information
+    $dependentAssembly = $rootConfig.CreateElement("dependentAssembly", $assemblyBindingNameSpace)
+    $assemblyIdentity = $rootConfig.CreateElement("assemblyIdentity", $assemblyBindingNameSpace)
+    $attribute = $rootConfig.CreateAttribute("name")
+    $attribute.Value = "System.Web.WebPages.Razor";
     $assemblyIdentity.Attributes.Append($attribute);
     
     $attribute = $rootConfig.CreateAttribute("publicKeyToken")
