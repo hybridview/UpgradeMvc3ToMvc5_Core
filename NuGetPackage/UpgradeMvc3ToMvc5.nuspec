@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>UpgradeMvc3ToMvc5</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Andrew Moore</authors>
     <owners>Andrew</owners>
     <projectUrl>https://github.com/hybridview/UpgradeMvc3ToMvc5_Core</projectUrl>
@@ -11,6 +11,9 @@
 		Upgrades an MVC3 project to MVC5, adding/updating only core MVC5 components (No OAuth, etc).
 		This package is based on a package created by Nandip Makwana (http://www.dotnetexpertguide.com/2013/02/aspnet-mvc-auto-upgrade-mvc-3-to-mvc-4-application.html).
 		It was modified to support MVC5 and fix a few other issues.
+		
+		[CHANGELOG]
+		1.0.1: Removed all but one assembly binding redirect because package update process already does this. Heavily documented Install.ps1.
 	</description>
     <tags>MVCUpgrade</tags>
     <dependencies>
